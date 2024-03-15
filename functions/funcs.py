@@ -28,7 +28,7 @@ def convert_all(path: str, extension: str, all: bool = False, log: bool = False,
 
     if log:
         result = subprocess.run("find . -name image_convert.log -exec realpath {} \\;", shell=True, capture_output=True, text=True)
-        print(f"Image log created: {bg.lightgrey}{result.stdout}{c.reset}")
+        print(f"{bg.lightgrey}Image log created:{c.reset}")
 
     for file in os.listdir(path):
         if os.path.isfile(file):
