@@ -39,7 +39,7 @@ def convert_all(path: str, extension: str, all: bool = False, log: bool = False,
             if result.returncode == 0:
                 if log:
                     with open("image_convert.log", "a") as f:
-                        f.write(f"{str(datetime.now(timezone.utc))} {file} {file}{extension}\n")
+                        f.write(f"{str(datetime.now(timezone.utc))} {file} {file}.{extension}\n")
             else:
                 if log:
                     with open("image_convert.log", "a") as f:
