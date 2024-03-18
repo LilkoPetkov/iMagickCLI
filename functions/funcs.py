@@ -24,9 +24,9 @@ def convert(file: str, extension: str, output_file: str, log: bool = False, resi
 # Convert all images in dir
 def convert_all(path: str, extension: str, all: bool = False, log: bool = False, resize: int = 0) -> None:
     if not Path(path).exists():
-        parser.exit(1, message="the target directory doesn't exist")
+        parser.exit(1, message=f"{c.bold}{fg.red}Error: the target directory doesn't exist{c.reset}")
     if not all:
-        parser.exit(1, message="please pass --all to confirm")
+        parser.exit(1, message=f"{c.bold}{fg.red}Error: please pass --all to confirm{c.reset}")
 
     if log:
         result = subprocess.run("find . -name image_convert.log -exec realpath {} \\;", shell=True, capture_output=True, text=True)
@@ -53,7 +53,7 @@ def delete(pathToLog: Union[None, str]) -> None:
     remove_files = f"for image in \"$(cat {pathToLog} | awk '{{print $4}}')\"; do rm -f $image; done"
     result = subprocess.run(remove_files, shell=True, capture_output=True)
 
-    if result.returncode == 0:
-        print(f"{bg.green}Converted images removed{c.reset}")
+    if result.stderr:
+        print(f"{c.bold}{fg.red}Error: image_convert.log might be missing, use -h for help{c.reset}")
     else:
-        print(f"{c.bold}{fg.red}{result.stderr}{c.reset}")
+        print(f"{bg.green}Converted images removed{c.reset}")
