@@ -49,8 +49,8 @@ def convert_all(path: str, extension: str, all: bool = False, log: bool = False,
 
 
 # Delete all created files from log
-def delete(path_to_log: Union[str, None]) -> None:
-    remove_files = f"for image in \"$(cat {path_to_log} | awk '{{print $4}}')\"; do rm -f $image; done"
+def delete(pathToLog: Union[None, str]) -> None:
+    remove_files = f"for image in \"$(cat {pathToLog} | awk '{{print $4}}')\"; do rm -f $image; done"
     result = subprocess.run(remove_files, shell=True, capture_output=True, text=True)
 
     if result.returncode == 0:
