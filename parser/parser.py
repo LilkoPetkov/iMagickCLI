@@ -25,5 +25,12 @@ convert_parser = subparsers.add_parser(
 convert_all_parser = subparsers.add_parser(
     "convert_dir", 
     help="convert all images in provided directory",
-    usage=f"{fg.lightgreen}{c.bold}inputFile outputFile --extension [--resize]{c.reset}"
+    usage=f"{fg.lightgreen}{c.bold}PathToDirectory --extension --all [--resize] [--log]{c.reset}"
+)
+
+    ## Delete
+delete_all_parser = subparsers.add_parser(
+    "delete",
+    help="delete all created images if image_convert.log exists",
+    usage=f"{fg.lightgreen}{c.bold}[--pathToLog/-ptl=PATH]{c.reset}"
 )

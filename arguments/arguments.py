@@ -1,6 +1,6 @@
-from parser.parser import parser, convert_parser, convert_all_parser
+from parser.parser import parser, convert_parser, convert_all_parser, delete_all_parser
 from typing import Union
-from functions.funcs import convert, convert_all
+from functions.funcs import convert, convert_all, delete
 
 
 # Arguments single convert
@@ -67,10 +67,20 @@ convert_all_parser.add_argument(
     action="store_true"
 )
 
+# delete all converted image copies
+delete_all_parser.add_argument(
+    "--pathToLog",
+    "-ptl",
+    default="./image_convert.log",
+    type=Union[str],
+    metavar=""
+)
+
 
 # set callback functions
 convert_parser.set_defaults(func=convert)
 convert_all_parser.set_defaults(func=convert_all)
+delete_all_parser.set_defaults(func=delete)
 
 # parse args
 args = parser.parse_args()

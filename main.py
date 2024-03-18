@@ -1,7 +1,8 @@
 import inspect
+import os
+
 from arguments.arguments import args
 from colors.colors import c, fg
-import os
 
 
 # call function
@@ -10,10 +11,10 @@ if __name__ == "__main__":
         # get function
         func = args.func
     except AttributeError as ex:
-        print(f"{fg.red}usage{c.reset}: {fg.lightgreen}python {os.path.basename(__file__)} -h{c.reset}")
+        print(f"{fg.red}usage{c.reset}: {fg.lightgreen}python3 {os.path.basename(__file__)} -h{c.reset}")
         exit(0)
     except NameError as ne:
-        print(f"{fg.red}usage{c.reset}: python {os.path.basename(__file__)} -h{c.reset}")
+        print(f"{fg.red}usage{c.reset}: python3 {os.path.basename(__file__)} -h{c.reset}")
         exit(0)
     
     # get the signature of the function and parameters
