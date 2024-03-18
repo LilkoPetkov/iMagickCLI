@@ -51,7 +51,7 @@ def convert_all(path: str, extension: str, all: bool = False, log: bool = False,
 # Delete all created files from log
 def delete(pathToLog: Union[None, str]) -> None:
     remove_files = f"for image in \"$(cat {pathToLog} | awk '{{print $4}}')\"; do rm -f $image; done"
-    result = subprocess.run(remove_files, shell=True, capture_output=True, text=True)
+    result = subprocess.run(remove_files, shell=True, capture_output=True)
 
     if result.returncode == 0:
         print(f"{bg.green}Converted images removed{c.reset}")

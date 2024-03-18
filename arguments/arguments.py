@@ -73,7 +73,7 @@ delete_all_parser.add_argument(
     "-ptl",
     default="./image_convert.log",
     type=Union[str],
-    metavar=""
+    metavar="path to log file. Defaults to ./image_convert.log"
 )
 
 
