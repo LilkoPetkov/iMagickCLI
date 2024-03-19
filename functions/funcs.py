@@ -10,7 +10,8 @@ from colors.colors import c, fg, bg
 
 # Convert single image
 def convert(file: str, extension: str, output_file: str, width: int = 0, height: int = 0) -> None:
-    command = f"magick {file} {output_file}.{extension}" if width == 0 and height == 0 else f"magick {file} -resize {width}x{height} {output_file}.{extension}"
+    command = f"magick {file} {output_file}.{extension}" if width == 0 and height == 0 else\
+    f"magick {file} -resize {width}x{height} {output_file}.{extension}"
 
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
 
@@ -22,7 +23,7 @@ def convert(file: str, extension: str, output_file: str, width: int = 0, height:
 
 
 # Convert all images in dir
-def convert_all(path: str, extension: str, all: bool = False, log: bool = False, resize: int = 0) -> None:
+def convert_all(path: str, extension: str, all: bool = False, log: bool = False, width: int = 0, height: int = 0) -> None:
     if not Path(path).exists():
         parser.exit(1, message=f"{c.bold}{fg.red}Error: the target directory doesn't exist{c.reset}")
     if not all:
@@ -35,7 +36,8 @@ def convert_all(path: str, extension: str, all: bool = False, log: bool = False,
     for file in os.listdir(path):
         if os.path.isfile(file):
     
-            command = f"magick {file} {file}.{extension}" if resize == 0 else f"magick {file} -resize {resize}% {file}.{extension}"
+            command = f"magick {file} {file}.{extension}" if width == 0 and height == 0 else\
+            f"magick {file} -resize {width}x{height} {file}.{extension}"
             result = subprocess.run(command, shell=True, capture_output=True, text=True)
     
             if result.returncode == 0:

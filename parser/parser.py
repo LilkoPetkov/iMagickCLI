@@ -15,18 +15,18 @@ subparsers = parser.add_subparsers(
     help="valid command options",
 )
 
-
     ## Convert
 convert_parser = subparsers.add_parser(
     "convert", 
     help="convert images from one format to another",
     usage=f"{fg.lightgreen}{c.bold}inputFile outputFile --extension=STR [--width=INT] [--height=INT]{c.reset}"
 )
+
     ## Upgrade
 convert_all_parser = subparsers.add_parser(
     "convert_dir", 
     help="convert all images in provided directory",
-    usage=f"{fg.lightgreen}{c.bold}PathToDirectory --extension=STR --all [--resize=INT] [--log]{c.reset}"
+    usage=f"{fg.lightgreen}{c.bold}PathToDirectory --extension=STR --all [--width=INT] [--height=INT] [--log]{c.reset}"
 )
 
     ## Delete

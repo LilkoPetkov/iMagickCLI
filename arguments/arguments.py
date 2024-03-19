@@ -64,8 +64,16 @@ convert_all_parser.add_argument(
     required=True
 )
 convert_all_parser.add_argument(
-    "--resize",
-    "-re",
+    "--width",
+    "-wi",
+    help="resize image by percentage",
+    metavar="",
+    type=Union[int],
+    default=0
+)
+convert_all_parser.add_argument(
+    "--height",
+    "-he",
     help="resize image by percentage",
     metavar="",
     type=Union[int],
