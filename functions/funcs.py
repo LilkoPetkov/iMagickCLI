@@ -31,7 +31,7 @@ def convert_all(path: str, extension: str, all: bool = False, log: bool = False,
 
     if log:
         result = subprocess.run("find . -name image_convert.log -exec realpath {} \\;", shell=True, capture_output=True, text=True)
-        print(f"{bg.lightgrey}Image log created: {result}{c.reset}")
+        print(f"{bg.green}Image log created{c.reset}")
 
     for file in os.listdir(path):
         if os.path.isfile(file):
@@ -43,11 +43,11 @@ def convert_all(path: str, extension: str, all: bool = False, log: bool = False,
             if result.returncode == 0:
                 if log:
                     with open("image_convert.log", "a") as f:
-                        f.write(f"{str(datetime.now(timezone.utc))} {file} {file}.{extension}\n")
+                        f.write(f"[{str(datetime.now(timezone.utc))}] {file} {file}.{extension}\n")
             else:
                 if log:
                     with open("image_convert.log", "a") as f:
-                        f.write(f"{str(datetime.now(timezone.utc))} {result.stderr}\n")
+                        f.write(f"[{str(datetime.now(timezone.utc))}] {result.stderr}\n")
 
 
 # Delete all created files from log
