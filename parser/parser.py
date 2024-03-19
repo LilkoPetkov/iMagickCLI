@@ -7,11 +7,12 @@ from colors.colors import c, fg, bg
 parser = argparse.ArgumentParser(
     description=f"{fg.orange}{c.bold}Image processing CLI{c.reset}",
     prog=f"{fg.green}{c.bold}{os.path.basename(__file__)}{c.reset}",
+    usage=f"{fg.green}{c.bold}main.py [-h] [-v]{c.reset}",
 )
 
 subparsers = parser.add_subparsers(
     title="commands",
-    help="valid command options"
+    help="valid command options",
 )
 
 
@@ -19,7 +20,7 @@ subparsers = parser.add_subparsers(
 convert_parser = subparsers.add_parser(
     "convert", 
     help="convert images from one format to another",
-    usage=f"{fg.lightgreen}{c.bold}inputFile outputFile --extension=STR [--resize=INT]{c.reset}"
+    usage=f"{fg.lightgreen}{c.bold}inputFile outputFile --extension=STR [--width=INT] [--height=INT]{c.reset}"
 )
     ## Upgrade
 convert_all_parser = subparsers.add_parser(

@@ -2,6 +2,8 @@ from parser.parser import parser, convert_parser, convert_all_parser, delete_all
 from typing import Union
 from functions.funcs import convert, convert_all, delete
 
+# version
+parser.add_argument("-v", "--version", action="version", version="0.0.1")
 
 # Arguments single convert
 convert_parser.add_argument(
@@ -25,9 +27,17 @@ convert_parser.add_argument(
     metavar=""
 )
 convert_parser.add_argument(
-    "--resize",
-    "-re",
-    help="resize image by percentage",
+    "--width",
+    "-wi",
+    help="resize image width",
+    metavar="",
+    type=Union[int],
+    default=0
+)
+convert_parser.add_argument(
+    "--height",
+    "-he",
+    help="resize image height",
     metavar="",
     type=Union[int],
     default=0
@@ -37,7 +47,7 @@ convert_parser.add_argument(
 convert_all_parser.add_argument(
     "path",
     help="absolute path to directory",
-    metavar="",    
+    metavar="pathToDirectory",    
 )
 convert_all_parser.add_argument(
     "--extension",
@@ -73,7 +83,8 @@ delete_all_parser.add_argument(
     "-ptl",
     default="./image_convert.log",
     type=Union[str],
-    metavar="path to log file. Defaults to ./image_convert.log"
+    help="path to log file. Defaults to ./image_convert.log",
+    metavar=""
 )
 
 

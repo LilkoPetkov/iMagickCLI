@@ -9,8 +9,8 @@ from colors.colors import c, fg, bg
 
 
 # Convert single image
-def convert(file: str, extension: str, output_file: str, log: bool = False, resize: int = 0) -> None:
-    command = f"magick {file} {output_file}.{extension}" if resize == 0 else f"magick {file} -resize {resize}% {output_file}.{extension}"
+def convert(file: str, extension: str, output_file: str, width: int = 0, height: int = 0) -> None:
+    command = f"magick {file} {output_file}.{extension}" if width == 0 and height == 0 else f"magick {file} -resize {width}x{height} {output_file}.{extension}"
 
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
 
