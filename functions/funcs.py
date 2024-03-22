@@ -31,10 +31,9 @@ def convert_all(path: str, extension: str, exceptions: List[str], all: bool = Fa
 
     if log:
         result = subprocess.run("find . -name image_convert.log -exec realpath {} \\;", shell=True, capture_output=True, text=True)
-        print(f"{bg.green}Image log created{c.reset}")
+        print(f"{bg.green}Image convert log/s: {result.stderr if result.stderr else result.stdout}{c.reset}")
 
     for file in os.listdir(path):
-        print(file)
         if os.path.isfile(file) and file not in exceptions:
     
             command = f"magick {file} {file}.{extension}" if width == 0 and height == 0 else\
