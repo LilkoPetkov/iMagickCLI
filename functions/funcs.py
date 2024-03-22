@@ -23,7 +23,7 @@ def convert(file: str, extension: str, output_file: str, width: int = 0, height:
 
 
 # Convert all images in dir
-def convert_all(path: str, extension: str, all: bool = False, log: bool = False, width: int = 0, height: int = 0, exceptions: List[str] = []) -> None:
+def convert_all(path: str, extension: str, exceptions: List[str], all: bool = False, log: bool = False, width: int = 0, height: int = 0) -> None:
     if not Path(path).exists():
         parser.exit(1, message=f"{c.bold}{fg.red}Error: the target directory doesn't exist{c.reset}")
     if not all:
@@ -31,7 +31,7 @@ def convert_all(path: str, extension: str, all: bool = False, log: bool = False,
 
     if log:
         result = subprocess.run("find . -name image_convert.log -exec realpath {} \\;", shell=True, capture_output=True, text=True)
-        print(f"{bg.green}Image convert log/s: {result.stderr if result.stderr else result.stdout}{c.reset}")
+        print(f"{bg.green}Image convert log/s: {result.stdout}{c.reset}")
 
     for file in os.listdir(path):
         if os.path.isfile(file) and file not in exceptions:
@@ -47,7 +47,7 @@ def convert_all(path: str, extension: str, all: bool = False, log: bool = False,
             else:
                 if log:
                     with open("image_convert.log", "a") as f:
-                        f.write(f"[{str(datetime.now(timezone.utc))}] {result.stderr}\n")
+                        f.write(f"[{str(datetime.now(timezone.utc))}] {file} {file}.{extension} [{result.stderr}]")
 
 
 # Delete all created files from log

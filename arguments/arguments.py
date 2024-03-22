@@ -89,6 +89,7 @@ convert_all_parser.add_argument(
     help="add exception to file conversion",
     action="append",
     metavar="",
+    default=[]
 )
 
 # delete all converted image copies
