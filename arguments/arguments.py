@@ -84,6 +84,12 @@ convert_all_parser.add_argument(
     help="creates a log for all conversions",
     action="store_true"
 )
+convert_all_parser.add_argument(
+    "--exceptions",
+    help="add exception to file conversion",
+    action="append",
+    metavar="",
+)
 
 # delete all converted image copies
 delete_all_parser.add_argument(

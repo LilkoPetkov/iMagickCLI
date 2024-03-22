@@ -11,8 +11,9 @@ parser = argparse.ArgumentParser(
 )
 
 subparsers = parser.add_subparsers(
-    title="commands",
-    help="valid command options",
+    title=f"{fg.orange}commands{c.reset}",
+    help="",
+    metavar=""
 )
 
     ## Convert
@@ -26,7 +27,7 @@ convert_parser = subparsers.add_parser(
 convert_all_parser = subparsers.add_parser(
     "convert_dir", 
     help="convert all images in provided directory",
-    usage=f"{fg.lightgreen}{c.bold}PathToDirectory --extension=STR --all [--width=INT] [--height=INT] [--log]{c.reset}"
+    usage=f"{fg.lightgreen}{c.bold}PathToDirectory --extension=STR --all [--width=INT] [--height=INT] [--exceptions=STR] [--log]{c.reset}"
 )
 
     ## Delete

@@ -4,7 +4,7 @@ import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from parser.parser import parser
-from typing import Union
+from typing import Union, List
 from colors.colors import c, fg, bg
 
 
@@ -23,7 +23,7 @@ def convert(file: str, extension: str, output_file: str, width: int = 0, height:
 
 
 # Convert all images in dir
-def convert_all(path: str, extension: str, all: bool = False, log: bool = False, width: int = 0, height: int = 0) -> None:
+def convert_all(path: str, extension: str, exceptions: List[str], all: bool = False, log: bool = False, width: int = 0, height: int = 0) -> None:
     if not Path(path).exists():
         parser.exit(1, message=f"{c.bold}{fg.red}Error: the target directory doesn't exist{c.reset}")
     if not all:
@@ -34,7 +34,8 @@ def convert_all(path: str, extension: str, all: bool = False, log: bool = False,
         print(f"{bg.green}Image log created{c.reset}")
 
     for file in os.listdir(path):
-        if os.path.isfile(file):
+        print(file)
+        if os.path.isfile(file) and file not in exceptions:
     
             command = f"magick {file} {file}.{extension}" if width == 0 and height == 0 else\
             f"magick {file} -resize {width}x{height} {file}.{extension}"
