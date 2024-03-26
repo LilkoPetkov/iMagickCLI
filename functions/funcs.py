@@ -63,7 +63,7 @@ def delete(pathToLog: Union[None, str]) -> None:
 
 
 # Encipher image
-def encipher(image: List[str], passphrase: Union[int, str]) -> None:
+def encipher(image: str, passphrase: Union[int, str]) -> None:
     try:
         with open("passphrase.txt", 'x') as f:
             f.write(f"{passphrase}")
@@ -72,17 +72,16 @@ def encipher(image: List[str], passphrase: Union[int, str]) -> None:
         with open(f"passphrase{str(uuid.uuid4())}.txt", 'x') as f:
             f.write(f"{passphrase}")
 
-    for i in image:
-        if not os.path.isfile(i):
-            print(f"{c.bold}{fg.red}Error: {i} does not exist or is not an image{c.reset}")
-            continue
 
-        command = f"magick {i} -encipher {f.name} {i}"
-        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    if not os.path.isfile(i):
+        parser.exit(1, message=f"{c.bold}{fg.red}Error: {image} does not exist or is not an image{c.reset}")
 
-        if result.stderr:
-            print(f"{c.bold}{fg.red}Error: {i} could not be converted{c.reset}")
-            subprocess.run(f"rm -f {f.name}", shell=True)
-        else:
-            print(f"{fg.green}Success: {i} converted with passphrase{c.reset}")
-            print(f"{fg.green}Succcess: {f.name} created{c.reset}")
+    command = f"magick {image} -encipher {f.name} {image}"
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+
+    if result.stderr:
+        print(f"{c.bold}{fg.red}Error: {image} could not be converted{c.reset}")
+        subprocess.run(f"rm -f {f.name}", shell=True)
+    else:
+        print(f"{fg.green}Success: {image} converted with passphrase{c.reset}")
+        print(f"{fg.green}Succcess: {f.name} created{c.reset}")

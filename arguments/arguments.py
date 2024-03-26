@@ -106,14 +106,13 @@ delete_all_parser.add_argument(
 encypher_parser.add_argument(
     "image", 
     type=str,
-    action="append",
     help="input image name or relative/absolute path to file",
     metavar="image"
 )
 encypher_parser.add_argument(
     "--passphrase",
     "-pass",
-    type=str,
+    type=Union[str, int],
     help="passphrase used for the image enciphering",
     metavar="",
     required=True,
