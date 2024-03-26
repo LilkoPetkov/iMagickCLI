@@ -1,6 +1,6 @@
-from parser.parser import parser, convert_parser, convert_all_parser, delete_all_parser, encypher_parser
+from parser.parser import parser, convert_parser, convert_all_parser, delete_all_parser, encypher_parser, decypher_parser
 from typing import Union
-from functions.funcs import convert, convert_all, delete, encipher
+from functions.funcs import convert, convert_all, delete, encipher, decipher
 
 # version
 parser.add_argument("-v", "--version", action="version", version="0.0.1")
@@ -107,7 +107,7 @@ encypher_parser.add_argument(
     "image", 
     type=str,
     help="input image name or relative/absolute path to file",
-    metavar="image"
+    metavar="inputImage"
 )
 encypher_parser.add_argument(
     "--passphrase",
@@ -118,12 +118,37 @@ encypher_parser.add_argument(
     required=True,
 )
 
+# decipher args
+decypher_parser.add_argument(
+    "image",
+    type=str,
+    help="input image or relative/absolute path to be decyphered",
+    metavar="inputImage"
+)
+decypher_parser.add_argument(
+    "--pass_file",
+    "-pf",
+    type=str,
+    required=True,
+    metavar="",
+    help="passphrase file generated during enciphering (.txt)"
+)
+decypher_parser.add_argument(
+    "--rm_pass",
+    "-rmp",
+    type=bool,
+    metavar="",
+    help="remove passphrase file after decipher",
+    action="store_true"
+)
+
 
 # set callback functions
 convert_parser.set_defaults(func=convert)
 convert_all_parser.set_defaults(func=convert_all)
 delete_all_parser.set_defaults(func=delete)
 encypher_parser.set_defaults(func=encipher)
+decypher_parser.set_defaults(func=decipher)
 
 # parse args
 args = parser.parse_args()

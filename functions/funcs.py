@@ -1,6 +1,7 @@
 import os
 import subprocess
 import uuid
+import re
 
 from datetime import datetime, timezone
 from pathlib import Path
@@ -17,8 +18,8 @@ def convert(file: str, extension: str, output_file: str, width: int = 0, height:
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
 
     if result.returncode == 0:
-        print(f"{fg.green}Success: Image {file} successfully converted to {extension}{c.reset}")
-        print(f"{fg.green}Success: New file: {output_file}.{extension}{c.reset}")
+        print(f"{fg.green}Success{c.reset}: Image {file} successfully converted to {extension}")
+        print(f"{fg.green}Success{c.reset}: New file: {output_file}.{extension}")
     else:
         print(f"{c.bold}{fg.red}{result.stderr}{c.reset}")
 
@@ -26,13 +27,13 @@ def convert(file: str, extension: str, output_file: str, width: int = 0, height:
 # Convert all images in dir
 def convert_all(path: str, extension: str, exceptions: List[str], all: bool = False, log: bool = False, width: int = 0, height: int = 0) -> None:
     if not Path(path).exists():
-        parser.exit(1, message=f"{c.bold}{fg.red}Error: the target directory doesn't exist{c.reset}")
+        parser.exit(1, message=f"{c.bold}{fg.red}Error{c.reset}: the target directory doesn't exist\n")
     if not all:
-        parser.exit(1, message=f"{c.bold}{fg.red}Error: please pass --all to confirm{c.reset}")
+        parser.exit(1, message=f"{c.bold}{fg.red}Error{c.reset}: please pass --all to confirm\n")
 
     if log:
         result = subprocess.run("find . -name image_convert.log -exec realpath {} \\;", shell=True, capture_output=True, text=True)
-        print(f"{bg.green}Success: Image convert log created{c.reset}")
+        print(f"{bg.green}Success{c.reset}: Image convert log created")
 
     for file in os.listdir(path):
         if os.path.isfile(os.path.join(path, file)) and file not in exceptions:
@@ -57,15 +58,15 @@ def delete(pathToLog: Union[None, str]) -> None:
     result = subprocess.run(remove_files, shell=True, capture_output=True)
 
     if result.stderr:
-        print(f"{c.bold}{fg.red}Error: image_convert.log might be missing, use -h for help{c.reset}")
+        print(f"{c.bold}{fg.red}{c.reset}: image_convert.log might be missing, use -h for help")
     else:
-        print(f"{fg.green}Success: Converted images removed{c.reset}")
+        print(f"{fg.green}Success{c.reset}: Converted images removed")
 
 
 # Encipher image
 def encipher(image: str, passphrase: Union[int, str]) -> None:
     if not os.path.isfile(image):
-        parser.exit(1, message=f"{c.bold}{fg.red}Error: {image} does not exist or is not an image{c.reset}")
+        parser.exit(1, message=f"{c.bold}{fg.red}Error{c.reset}: {image} does not exist or is not an image\n")
 
     try:
         with open("passphrase.txt", 'x') as f:
@@ -79,8 +80,36 @@ def encipher(image: str, passphrase: Union[int, str]) -> None:
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
 
     if result.stderr:
-        print(f"{c.bold}{fg.red}Error: {result.stderr}{c.reset}")
+        print(f"{c.bold}{fg.red}Error{c.reset}: {result.stderr}")
         subprocess.run(f"rm -f {f.name}", shell=True)
     else:
-        print(f"{fg.green}Success: {image} converted with passphrase{c.reset}")
-        print(f"{fg.green}Succcess: {f.name} created{c.reset}")
+        print(f"{fg.green}Success{c.reset}: {image} enciphered with passphrase: {fg.pink}{passphrase}{c.reset}")
+        print(f"{fg.green}Succcess{c.reset}: {f.name} created")
+
+
+# Decipher images
+def decipher(image: str, pass_file: str, rm_pass: bool = False) -> None:
+    # regex check
+    pattern: str = r"(?P<txtFile>[A-z0-9]+\.txt$)"
+    try: 
+        file_name = re.search(pattern, pass_file).group("txtFile")
+    except AttributeError as ae:
+        parser.exit(1, message=f"{c.bold}{fg.red}Error{c.reset}: passphrase file has to be .txt\n")
+    
+    # regular file checks
+    if not os.path.isfile(image):
+        parser.exit(1, message=f"{c.bold}{fg.red}Error{c.reset}: {image} does not exist or is not an image\n")
+    if not os.path.isfile(pass_file):
+        parser.exit(1, message=f"{c.bold}{fg.red}Error{c.reset}: {pass_file} does not exist or is not an .txt file\n")
+
+    # command processing
+    command = f"magick {image} -decipher {pass_file} {image}"
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+
+    if result.stderr:
+        print(f"{c.bold}{fg.red}Error{c.reset}: {result.stderr}")
+    else:
+        print(f"{fg.green}Success{c.reset}: {image} deciphered with passphrase file: {fg.pink}{pass_file}{c.reset}")
+
+    if rm_pass:
+        subprocess.run(f"rm -f {pass_file}")
