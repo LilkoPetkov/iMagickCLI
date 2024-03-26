@@ -136,7 +136,6 @@ decypher_parser.add_argument(
 decypher_parser.add_argument(
     "--rm_pass",
     "-rmp",
-    metavar="",
     help="remove passphrase file after decipher",
     action="store_true"
 )
