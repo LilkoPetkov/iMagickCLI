@@ -1,11 +1,11 @@
-from parser.parser import parser, convert_parser, convert_all_parser, delete_all_parser
+from parser.parser import parser, convert_parser, convert_all_parser, delete_all_parser, encypher_parser
 from typing import Union
-from functions.funcs import convert, convert_all, delete
+from functions.funcs import convert, convert_all, delete, encipher
 
 # version
 parser.add_argument("-v", "--version", action="version", version="0.0.1")
 
-# Arguments single convert
+# single convert args
 convert_parser.add_argument(
     "file", 
     type=str,
@@ -31,7 +31,7 @@ convert_parser.add_argument(
     "-wi",
     help="resize image width",
     metavar="",
-    type=Union[int],
+    type=int,
     default=0
 )
 convert_parser.add_argument(
@@ -43,7 +43,7 @@ convert_parser.add_argument(
     default=0
 )
 
-# convert all pareser
+# convert all args
 convert_all_parser.add_argument(
     "path",
     help="absolute path to directory",
@@ -68,7 +68,7 @@ convert_all_parser.add_argument(
     "-wi",
     help="resize image by percentage",
     metavar="",
-    type=Union[int],
+    type=int,
     default=0
 )
 convert_all_parser.add_argument(
@@ -76,7 +76,7 @@ convert_all_parser.add_argument(
     "-he",
     help="resize image by percentage",
     metavar="",
-    type=Union[int],
+    type=int,
     default=0
 )
 convert_all_parser.add_argument(
@@ -92,14 +92,31 @@ convert_all_parser.add_argument(
     default=[]
 )
 
-# delete all converted image copies
+# delete all args
 delete_all_parser.add_argument(
     "--pathToLog",
     "-ptl",
     default="./image_convert.log",
-    type=Union[str],
+    type=str,
     help="path to log file. Defaults to ./image_convert.log",
     metavar=""
+)
+
+# encipher args
+encypher_parser.add_argument(
+    "image", 
+    type=str,
+    action="append",
+    help="input image name or relative/absolute path to file",
+    metavar="image"
+)
+encypher_parser.add_argument(
+    "--passphrase",
+    "-pass",
+    type=str,
+    help="passphrase used for the image enciphering",
+    metavar="",
+    required=True,
 )
 
 
@@ -107,6 +124,7 @@ delete_all_parser.add_argument(
 convert_parser.set_defaults(func=convert)
 convert_all_parser.set_defaults(func=convert_all)
 delete_all_parser.set_defaults(func=delete)
+encypher_parser.set_defaults(func=encipher)
 
 # parse args
 args = parser.parse_args()

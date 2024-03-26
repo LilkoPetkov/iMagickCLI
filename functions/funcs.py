@@ -1,5 +1,6 @@
 import os
 import subprocess
+import uuid
 
 from datetime import datetime, timezone
 from pathlib import Path
@@ -16,8 +17,8 @@ def convert(file: str, extension: str, output_file: str, width: int = 0, height:
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
 
     if result.returncode == 0:
-        print(f"{bg.green}Success: Image {file} successfully converted to {extension}{c.reset}")
-        print(f"{bg.green}Success: New file: {output_file}.{extension}{c.reset}")
+        print(f"{fg.green}Success: Image {file} successfully converted to {extension}{c.reset}")
+        print(f"{fg.green}Success: New file: {output_file}.{extension}{c.reset}")
     else:
         print(f"{c.bold}{fg.red}{result.stderr}{c.reset}")
 
@@ -58,4 +59,30 @@ def delete(pathToLog: Union[None, str]) -> None:
     if result.stderr:
         print(f"{c.bold}{fg.red}Error: image_convert.log might be missing, use -h for help{c.reset}")
     else:
-        print(f"{bg.green}Success: Converted images removed{c.reset}")
+        print(f"{fg.green}Success: Converted images removed{c.reset}")
+
+
+# Encipher image
+def encipher(image: List[str], passphrase: Union[int, str]) -> None:
+    try:
+        with open("passphrase.txt", 'x') as f:
+            f.write(f"{passphrase}")
+    except FileExistsError:
+        # if file exists, create it with a UUID
+        with open(f"passphrase{str(uuid.uuid4())}.txt", 'x') as f:
+            f.write(f"{passphrase}")
+
+    for i in image:
+        if not os.path.isfile(i):
+            print(f"{c.bold}{fg.red}Error: {i} does not exist or is not an image{c.reset}")
+            continue
+
+        command = f"magick {i} -encipher {f.name} {i}"
+        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+
+        if result.stderr:
+            print(f"{c.bold}{fg.red}Error: {i} could not be converted{c.reset}")
+            subprocess.run(f"rm -f {f.name}", shell=True)
+        else:
+            print(f"{fg.green}Success: {i} converted with passphrase{c.reset}")
+            print(f"{fg.green}Succcess: {f.name} created{c.reset}")

@@ -23,7 +23,7 @@ convert_parser = subparsers.add_parser(
     usage=f"{fg.lightgreen}{c.bold}inputFile outputFile --extension=STR [--width=INT] [--height=INT]{c.reset}"
 )
 
-    ## Upgrade
+    ## Convert all
 convert_all_parser = subparsers.add_parser(
     "convert_dir", 
     help="convert all images in provided directory",
@@ -34,5 +34,12 @@ convert_all_parser = subparsers.add_parser(
 delete_all_parser = subparsers.add_parser(
     "delete",
     help="delete all created images if image_convert.log exists",
-    usage=f"{fg.lightgreen}{c.bold}[--pathToLog/-ptl=STR]{c.reset}"
+    usage=f"{fg.lightgreen}{c.bold}[--pathToLog/-ptl=STR]{c.reset}",
+)
+
+    ## Encipher
+encypher_parser = subparsers.add_parser(
+    "encipher",
+    help="encypher image with a passphrase",
+    usage=f"{fg.lightgreen}{c.bold}inputFile -passphrase/-pass=STR{c.reset}"
 )
