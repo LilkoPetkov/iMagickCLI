@@ -39,7 +39,7 @@ convert_parser.add_argument(
     "-he",
     help="resize image height",
     metavar="",
-    type=Union[int],
+    type=int,
     default=0
 )
 
@@ -136,7 +136,6 @@ decypher_parser.add_argument(
 decypher_parser.add_argument(
     "--rm_pass",
     "-rmp",
-    type=bool,
     metavar="",
     help="remove passphrase file after decipher",
     action="store_true"
