@@ -41,7 +41,7 @@ delete_all_parser = subparsers.add_parser(
 encypher_parser = subparsers.add_parser(
     "encipher",
     help="encypher image with a pass phrase",
-    usage=f"{fg.lightgreen}{c.bold}inputFile -passphrase/-pass=STR{c.reset}"
+    usage=f"{fg.lightgreen}{c.bold}inputFile outputFile -passphrase/-pass=STR{c.reset}"
 )
 
     ## Decipher

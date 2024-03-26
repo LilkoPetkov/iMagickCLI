@@ -110,6 +110,12 @@ encypher_parser.add_argument(
     metavar="inputImage"
 )
 encypher_parser.add_argument(
+    "output_image",
+    type=str,
+    help="output image name or relative/absolute path to file",
+    metavar="outputImage"
+)
+encypher_parser.add_argument(
     "--passphrase",
     "-pass",
     type=str,

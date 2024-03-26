@@ -64,7 +64,7 @@ def delete(pathToLog: Union[None, str]) -> None:
 
 
 # Encipher image
-def encipher(image: str, passphrase: Union[int, str]) -> None:
+def encipher(image: str, output_image: str, passphrase: Union[int, str]) -> None:
     if not os.path.isfile(image):
         parser.exit(1, message=f"{c.bold}{fg.red}Error{c.reset}: {image} does not exist or is not an image\n")
 
@@ -76,14 +76,14 @@ def encipher(image: str, passphrase: Union[int, str]) -> None:
         with open(f"passphrase{str(uuid.uuid4())}.txt", 'x') as f:
             f.write(f"{passphrase}")
 
-    command = f"magick {image} -encipher {f.name} {image}"
+    command = f"magick {image} -encipher {f.name} {output_image}"
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
 
     if result.stderr:
         print(f"{c.bold}{fg.red}Error{c.reset}: {result.stderr}")
         subprocess.run(f"rm -f {f.name}", shell=True)
     else:
-        print(f"{fg.green}Success{c.reset}: {image} enciphered with passphrase: {fg.pink}{passphrase}{c.reset}")
+        print(f"{fg.green}Success{c.reset}: {output_image} enciphered with passphrase: {fg.pink}{passphrase}{c.reset}")
         print(f"{fg.green}Succcess{c.reset}: {f.name} created")
 
 
@@ -112,4 +112,4 @@ def decipher(image: str, pass_file: str, rm_pass: bool = False) -> None:
         print(f"{fg.green}Success{c.reset}: {image} deciphered with passphrase file: {fg.pink}{pass_file}{c.reset}")
 
     if rm_pass:
-        subprocess.run(f"rm -f {pass_file}")
+        subprocess.run(f"rm -f {pass_file}", shell=True)
