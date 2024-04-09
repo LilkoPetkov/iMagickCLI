@@ -56,7 +56,7 @@ def convert_all(path: str, extension: str, exceptions: List[str], all: bool = Fa
                 logger.error(result.stderr)
                 if log:
                     with open("image_convert.log", "a") as f:
-                        f.write(f"[{str(datetime.now(timezone.utc))}] {os.path.join(path, file)} {os.path.join(path, file)}.{extension} [{result.stderr}]")
+                        f.write(f"[{str(datetime.now(timezone.utc))}] {os.path.join(path, file)} {os.path.join(path, file)}.{extension} [{result.stderr}]\n")
 
 
 # Delete all created files from log
