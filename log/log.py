@@ -4,11 +4,11 @@ import os
 
 from pathlib import Path
 
-# Longer
+# Logger
 logger = logging.getLogger(__name__)
 
 # Handlers
-file_handler = logging.FileHandler(f"{os.path.join(Path().absolute(), 'log', 'logs', 'app.log')}", mode="a")
+file_handler = logging.FileHandler(f"{os.path.join(os.path.dirname(os.path.realpath(__file__)), 'logs', 'app.log')}", mode="a")
 file_handler.setLevel(logging.DEBUG)
 
 # Formatters
