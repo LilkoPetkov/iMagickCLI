@@ -119,7 +119,7 @@ encypher_parser.add_argument(
     "--passphrase",
     "-pass",
     type=str,
-    help="passphrase used for the image enciphering",
+    help="passphrase used for the image enciphering (no spaces should be used)",
     metavar="",
     required=True,
 )
