@@ -48,7 +48,7 @@ def convert_all(path: str, extension: str, exceptions: List[str], all: bool = Fa
             result = subprocess.run(command, shell=True, capture_output=True, text=True)
     
             if result.returncode == 0:
-                logger.debug(f"{os.path.join(path, file)} {os.path.join(path, file)}.{extension}")
+                logger.info(f"{os.path.join(path, file)} {os.path.join(path, file)}.{extension}")
                 if log:
                     with open("image_convert.log", "a") as f:
                         f.write(f"[{str(datetime.now(timezone.utc))}] {os.path.join(path, file)} {os.path.join(path, file)}.{extension}\n")

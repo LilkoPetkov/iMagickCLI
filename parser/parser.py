@@ -48,5 +48,5 @@ encypher_parser = subparsers.add_parser(
 decypher_parser = subparsers.add_parser(
     "decipher",
     help="decyper image with pass phrase file (.txt)",
-    usage=f"{fg.lightgreen}{c.bold}inputFile --pass_file/-pf=STR [--rm_pass/-rmp=STR]{c.reset}"
+    usage=f"{fg.lightgreen}{c.bold}inputFile --pass_file/-pf=STR [--rm_pass/-rmp]{c.reset}"
 )

@@ -6,6 +6,7 @@ from pathlib import Path
 
 # Logger
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 # Handlers
 file_handler = logging.FileHandler(f"{os.path.join(os.path.dirname(os.path.realpath(__file__)), 'logs', 'app.log')}", mode="a")
